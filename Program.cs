@@ -1,14 +1,17 @@
+using Microsoft.Extensions.Caching.Memory;
 using PracticeLinq.Contexts;
+using PracticeLinq.Interfaces;
 using PracticeLinq.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddMemoryCache();
 builder.Services.AddDbContext<ApplicationDbContext>();
-builder.Services.AddScoped<OrderReportService>();
+builder.Services.AddScoped<IOrderReportService,OrderReportService>();
+builder.Services.Decorate<IOrderReportService, CashedReportRepository>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

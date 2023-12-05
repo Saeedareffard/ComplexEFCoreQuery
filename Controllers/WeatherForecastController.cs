@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PracticeLinq.Dtos;
+using PracticeLinq.Interfaces;
 using PracticeLinq.Services;
 
 namespace PracticeLinq.Controllers
@@ -8,7 +9,7 @@ namespace PracticeLinq.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly OrderReportService _service;
+        private readonly IOrderReportService _service;
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -16,7 +17,7 @@ namespace PracticeLinq.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, OrderReportService service)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IOrderReportService service)
         {
             _logger = logger;
             _service = service;
@@ -35,9 +36,9 @@ namespace PracticeLinq.Controllers
         }
 
         [HttpGet("GetReport")]
-        public async Task<List<OrderReportDto>> GetReport([FromQuery] int? year)
+        public  List<OrderReportDto> GetReport([FromQuery] int? year)
         {
-            return await _service.GetOrdersReport(year);
+            return  _service.GetOrdersReport(year);
         }
     }
 }

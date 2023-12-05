@@ -1,9 +1,10 @@
 ﻿using PracticeLinq.Contexts;
 using PracticeLinq.Dtos;
+using PracticeLinq.Interfaces;
 
 namespace PracticeLinq.Services;
 
-public class OrderReportService
+public class OrderReportService : IOrderReportService
 {
     private readonly ApplicationDbContext _context;
 
@@ -12,7 +13,7 @@ public class OrderReportService
         _context = context;
     }
 
-    public async Task<List<OrderReportDto>> GetOrdersReport(int? year)
+    public List<OrderReportDto> GetOrdersReport(int? year)
     {
         var reportYear = year ?? DateTime.Now.AddYears(-1).Year;
 
