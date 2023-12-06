@@ -17,9 +17,9 @@ namespace PracticeLinq.Controllers
     }
 
     [HttpGet("GetReport")]
-        public  List<OrderReportDto> GetReport([FromQuery] int? year)
+        public async  Task<List<OrderReportDto>> GetReport([FromQuery] int? year)
         {
-            return  _service.GetOrdersReport(year);
+            return await _service.GetOrdersReport(year);
         }
 
     }

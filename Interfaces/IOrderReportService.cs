@@ -4,6 +4,6 @@ namespace PracticeLinq.Interfaces
 {
     public interface IOrderReportService
     {
-        List<OrderReportDto> GetOrdersReport(int? year);
+        Task<List<OrderReportDto>> GetOrdersReport(int? year);
     }
 }

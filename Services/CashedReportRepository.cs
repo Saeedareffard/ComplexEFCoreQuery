@@ -15,15 +15,15 @@ public class CashedReportRepository : IOrderReportService
         _memoryCache = memoryCache;
     }
 
-    public List<OrderReportDto> GetOrdersReport(int? year)
+    public Task<List<OrderReportDto>> GetOrdersReport(int? year)
     {
         var reportYear = year ?? DateTime.Now.AddYears(-1).Year;
         var key = $"the year - {reportYear.ToString()}";
-        return _memoryCache.GetOrCreate(
+        return _memoryCache.GetOrCreateAsync(
             key,
-            entry => {
+            async entry => {
                 entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
-                return _orderReportService.GetOrdersReport(reportYear);
+                return await  _orderReportService.GetOrdersReport(reportYear);
             })!;
     }
 }
